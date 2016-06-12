@@ -44,6 +44,8 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -181,13 +183,74 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\BaseAdminController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\CategoryController.cs" />
+    <Compile Include="Controllers\FoodController.cs" />
+    <Compile Include="Controllers\vFoodAdminController.cs" />
+    <Compile Include="Controllers\vSpecialAdminController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\admin.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\billing.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\billingdetail.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\category.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\city.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\customer.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DAL\CategoryDAL.cs" />
+    <Compile Include="Models\DAL\FoodDAL.cs" />
+    <Compile Include="Models\DAL\FoodSpecialDateDAL.cs" />
+    <Compile Include="Models\district.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\food.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Lite\CategoryLite.cs" />
+    <Compile Include="Models\Lite\FoodLite.cs" />
+    <Compile Include="Models\Lite\FoodSpecialDateLite.cs" />
+    <Compile Include="Models\Model1.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model1.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Model1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Model1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model1.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\restaurant.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\specialdate.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Users.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ward.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -247,7 +310,98 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <EntityDeploy Include="Models\Model1.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Model1.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model1.edmx</DependentUpon>
+      <LastGenOutput>Model1.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Model1.edmx.diagram">
+      <DependentUpon>Model1.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\Model1.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model1.edmx</DependentUpon>
+      <LastGenOutput>Model1.cs</LastGenOutput>
+    </Content>
+    <None Include="Properties\PublishProfiles\Publish Banyan.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
+    <Content Include="Images\BackgroundAdmin\accent.png" />
+    <Content Include="Images\BackgroundAdmin\heroAccent.png" />
+    <Content Include="Images\BackgroundAdmin\moveLeft.png" />
+    <Content Include="Images\BackgroundAdmin\moveRight.png" />
+    <Content Include="Images\Background\banner.jpg" />
+    <Content Include="Images\Background\banner2.png" />
+    <Content Include="Images\Background\banner3.jpg" />
+    <Content Include="Images\Background\banner4.jpg" />
+    <Content Include="Images\Background\blank-image.jpg" />
+    <Content Include="Images\Background\detail.png" />
+    <Content Include="Images\Background\detailTrim.png" />
+    <Content Include="Images\Background\history1.png" />
+    <Content Include="Images\Background\history2.png" />
+    <Content Include="Images\Background\hoaanhdao.jpg" />
+    <Content Include="Images\Background\hotline.png" />
+    <Content Include="Images\Background\iconPlace.png" />
+    <Content Include="Images\Background\login.png" />
+    <Content Include="Images\Background\logoBanyan.png" />
+    <Content Include="Images\Background\logoBanyan2.png" />
+    <Content Include="Images\Background\logobanyanbig.png" />
+    <Content Include="Images\Background\logobanyanGreen.jpg" />
+    <Content Include="Images\Background\logobanyanGreen.png" />
+    <Content Include="Images\Background\menugreen.png" />
+    <Content Include="Images\Background\menuwhite.png" />
+    <Content Include="Images\Background\motomini.png" />
+    <Content Include="Images\Background\motoship.png" />
+    <Content Include="Images\Background\motoshipwhite.png" />
+    <Content Include="Images\Background\placemini.png" />
+    <Content Include="Images\Background\premium.png" />
+    <Content Include="Images\Background\premiumStore.png" />
+    <Content Include="Images\Background\premiumWhite.png" />
+    <Content Include="Images\Background\shipping.png" />
+    <Content Include="Images\Background\shopping-card-icon-2.png" />
+    <Content Include="Images\Background\shopping-card-icon-3.png" />
+    <Content Include="Images\Background\shopping-card-icon.png" />
+    <Content Include="Images\Background\shopping-card-mini.png" />
+    <Content Include="Images\Background\starAll.png" />
+    <Content Include="Images\Background\thap-cam-rau.jpg" />
+    <Content Include="Images\Background\tranhtuong.png" />
+    <Content Include="Images\Background\transparent.png" />
+    <Content Include="Images\Food\banh-canh.jpg" />
+    <Content Include="Images\Food\bi-can-ruot.jpg" />
+    <Content Include="Images\Food\blank-image.jpg" />
+    <Content Include="Images\Food\blank-image3.png" />
+    <Content Include="Images\Food\boughtnumber.png" />
+    <Content Include="Images\Food\bun-bo-hue.jpg" />
+    <Content Include="Images\Food\chay-hinh-dui-ga-chay-hinh-ruot.jpg" />
+    <Content Include="Images\Food\dau-hu-don-sot-ca-chay-hinh-dui-ga.jpg" />
+    <Content Include="Images\Food\dau-hu-don-thit-sot-ca-pha-lau.jpg" />
+    <Content Include="Images\Food\GiaoDienWeb.jpg" />
+    <Content Include="Images\Food\hu-tiu-mi.jpg" />
+    <Content Include="Images\Food\hu-tiu.jpg" />
+    <Content Include="Images\Food\nha-dam-duong-phen.jpg" />
+    <Content Include="Images\Food\Original\banh-canh.jpg" />
+    <Content Include="Images\Food\Original\blank-image.jpg" />
+    <Content Include="Images\Food\Original\blank-image3.png" />
+    <Content Include="Images\Food\Original\boughtnumber.png" />
+    <Content Include="Images\Food\Original\bun-bo-hue.jpg" />
+    <Content Include="Images\Food\Original\chay-hinh-dui-ga-chay-hinh-ruot.jpg" />
+    <Content Include="Images\Food\Original\dau-hu-don-sot-ca-chay-hinh-dui-ga.jpg" />
+    <Content Include="Images\Food\Original\dau-hu-don-thit-sot-ca-pha-lau.jpg" />
+    <Content Include="Images\Food\Original\hu-tiu-mi.jpg" />
+    <Content Include="Images\Food\Original\hu-tiu.jpg" />
+    <Content Include="Images\Food\Original\nha-dam-duong-phen.jpg" />
+    <Content Include="Images\Food\Original\sua-bi-do.jpg" />
+    <Content Include="Images\Food\Original\sua-mon.jpg" />
+    <Content Include="Images\Food\Original\thap-cam-chay.jpg" />
+    <Content Include="Images\Food\Original\thap-cam-rau.jpg" />
+    <Content Include="Images\Food\ruot-tom.jpg" />
+    <Content Include="Images\Food\sua-bi-do.jpg" />
+    <Content Include="Images\Food\sua-mon.jpg" />
+    <Content Include="Images\Food\thap-cam-chay.jpg" />
+    <Content Include="Images\Food\thap-cam-rau.jpg" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -262,6 +416,12 @@
     <Content Include="Scripts\knockout-2.2.0.debug.js" />
     <Content Include="Scripts\knockout-2.2.0.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Styles\admin.css" />
+    <Content Include="Styles\editadmin.css" />
+    <Content Include="Styles\home.css" />
+    <Content Include="Styles\listitem.css" />
+    <Content Include="Styles\specialdate.css" />
+    <Content Include="Styles\table.css" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -271,42 +431,38 @@
     </Content>
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Images\accent.png" />
-    <Content Include="Images\bullet.png" />
-    <Content Include="Images\heroAccent.png" />
-    <Content Include="Images\orderedList0.png" />
-    <Content Include="Images\orderedList1.png" />
-    <Content Include="Images\orderedList2.png" />
-    <Content Include="Images\orderedList3.png" />
-    <Content Include="Images\orderedList4.png" />
-    <Content Include="Images\orderedList5.png" />
-    <Content Include="Images\orderedList6.png" />
-    <Content Include="Images\orderedList7.png" />
-    <Content Include="Images\orderedList8.png" />
-    <Content Include="Images\orderedList9.png" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
-    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
-    <Content Include="Views\Account\_RemoveExternalLoginsPartial.cshtml" />
-    <Content Include="Views\Account\_SetPasswordPartial.cshtml" />
-    <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\Manage.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
-    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
+    <Content Include="Views\Category\Create.cshtml" />
+    <Content Include="Views\Category\Delete.cshtml" />
+    <Content Include="Views\Category\Details.cshtml" />
+    <Content Include="Views\Category\Edit.cshtml" />
+    <Content Include="Views\Category\Index.cshtml" />
+    <Content Include="Views\Category\Partial1.cshtml" />
+    <Content Include="Views\Food\AllFood.cshtml" />
+    <Content Include="Views\Shared\Admin.cshtml" />
+    <Content Include="Views\Shared\Category.cshtml" />
+    <Content Include="Views\Shared\HomeMaster.cshtml" />
+    <Content Include="Views\Shared\Master.cshtml" />
+    <Content Include="Views\vFoodAdmin\Create.cshtml" />
+    <Content Include="Views\vFoodAdmin\Delete.cshtml" />
+    <Content Include="Views\vFoodAdmin\Details.cshtml" />
+    <Content Include="Views\vFoodAdmin\Edit.cshtml" />
+    <Content Include="Views\vFoodAdmin\Index.cshtml" />
+    <Content Include="Views\vSpecialAdmin\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
