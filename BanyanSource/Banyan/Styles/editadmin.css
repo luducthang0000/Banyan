@@ -1,0 +1,139 @@
+﻿
+
+.content-edit {
+    width: 650px;
+    margin-left: 86px;
+}
+
+.content-edit-layout {
+    margin: 20px auto 40px auto;
+    width: 650px;
+}
+
+.content-edit-layout .editor-label, .editor-field, .display-label, .display-field {
+    display: inline-block;
+}
+
+.content-edit-layout .editor-label, .display-label {
+    width: 150px;
+}
+
+.content-edit-layout .editor-field, .display-field {
+    width: 450px;
+}
+
+.content-edit-layout input[type=submit] {
+    width: 470px;
+    border: none;
+    background-color: #FFFFFF;
+}
+
+input, textarea, select {
+    border: 1px solid #e2e2e2;
+    background: #fff;
+    color: #333;
+    font-size: 13px;
+    margin: 5px 0 6px 0;
+    padding: 5px;
+    width: 300px;
+}
+
+select {
+    width: 312px;
+}
+
+.content-edit-layout a {
+    color: lightgreen;
+    font-size: 22px;
+}
+
+.editor-field {
+    position: relative;
+}
+
+.display-label, .display-field {
+    color: #FFFFFF;
+}
+
+.propDisable {
+    display: none !important;
+}
+
+.deleteTitle {
+    color: white;
+    margin-bottom: 11px;
+    font-size: 24px;
+}
+
+.actiontitle p {
+    text-align: center;
+    color: white;
+    font-size: 24px;
+    background-color: deepskyblue;
+    margin: auto;
+    width: 100%;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+.message-info {
+    border: 1px solid;
+    clear: both;
+    padding: 10px 20px;
+}
+
+.message-error {
+    clear: both;
+    color: #e80c4d;
+    font-size: 1.1em;
+    font-weight: bold;
+    margin: 20px 0 10px 0;
+}
+
+.message-success {
+    color: #7ac0da;
+    font-size: 1.3em;
+    font-weight: bold;
+    margin: 20px 0 10px 0;
+}
+
+.error {
+    color: #e80c4d;
+}
+
+/* styles for validation helpers */
+.field-validation-error {
+    color: #e80c4d;
+    font-weight: bold;
+    position: absolute;
+    text-align: left;
+    top: 10px;
+    left: 320px;
+    width: 500px;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+input.input-validation-error {
+    border: 1px solid #e80c4d;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: #e80c4d;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+

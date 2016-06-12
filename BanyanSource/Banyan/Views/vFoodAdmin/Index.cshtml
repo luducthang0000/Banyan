@@ -1,0 +1,118 @@
+﻿@model IEnumerable<Banyan.Models.FoodLiteAdmin>
+
+@{
+    Layout = "~/Views/Shared/Admin.cshtml";
+}
+
+<link href="~/Styles/listitem.css" rel="stylesheet" />
+<link href="~/Styles/table.css" rel="stylesheet" />
+<script type="text/javascript">
+
+    function Search() {
+        var href = '@Url.Action("Index", "vFoodAdmin")';
+        var category = '&categoryid=' + $('#categoryid').val();
+        var name = '&searchString=' + $('#SearchString').val();
+        var isallday = '&isallday=' + $('#allday').val();
+        var isenable = '&isenable=' + $('#enable').val();
+        window.location.href = href + '?n=0' + category + name + isallday + isenable;
+    }
+
+</script>
+<div class="content-page">
+    <a href="@Url.Action("Create", "vFoodAdmin")" class="btnBlue">Tạo mới</a>
+    <div class="searchbox">
+        <label class="searchboxitem">Danh mục</label>
+        @Html.DropDownList("categoryid", (SelectList)ViewBag.categoryid, "...", new
+   { @*onchange = "Search();",*@@class = "searchboxitem"
+   })
+        <label class="searchboxitem">Lọc tên món</label>
+        @Html.TextBox("SearchString", "", new { @class = "searchboxitem" })
+        <label class="searchboxitem">Mọi ngày</label>
+        <select id="allday" class="searchboxitem">
+            <option value="-1">...</option>
+            <option value="1">Bán mọi ngày</option>
+            <option value="0">Bán chỉ định</option>
+        </select>
+        <label class="searchboxitem">Được bán</label>
+        <select id="enable" class="searchboxitem">
+            <option value="-1">...</option>
+            <option value="1">Được bán</option>
+            <option value="0">Không được bán</option>
+        </select>
+        <input class="searchboxitem" type="button" onclick="Search()" value="Tìm kiếm" />
+    </div>
+
+    <table class="table-fill">
+        <thead>
+            <tr>
+                <th>
+                    Danh mục
+                </th>
+                <th>
+                    Tên món
+                </th>
+                <th>
+                    Giá
+                </th>
+                <th>
+                    Hình lớn
+                </th>
+                <th>
+                    Hình nhỏ
+                </th>
+                <th>
+                    Bán mọi ngày
+                </th>
+                <th>
+                    Đươc bán
+                </th>
+                <th>
+                    Ngày tạo
+                </th>
+                <th>
+                    Vị trí
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody class="table-hover">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.categoryname)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.name)
+                    </td>
+                    <td class="smalltd">
+                        @Html.DisplayFor(modelItem => item.price)
+                    </td>
+                    <td class="smalltd">
+                        <img style="width:70px;height:70px" src="../../Images/Food/@item.bigimage" />
+                    </td>
+                    <td class="smalltd">
+                        <img style="width:70px;height:70px" src="../../Images/Food/@item.smallimage" />
+                    </td>
+                    <td class="smalltd">
+                        @Html.DisplayFor(modelItem => item.allday)
+                    </td>
+                    <td class="smalltd">
+                        @Html.DisplayFor(modelItem => item.enable)
+                    </td>
+                    <td class="datetd">
+                        @Html.DisplayFor(modelItem => item.createdate)
+                    </td>
+                    <td class="smalltd">
+                        @Html.DisplayFor(modelItem => item.position)
+                    </td>
+                    <td class="actiontd">
+                        @Html.ActionLink("Sửa", "Edit", new { id = item.id }) |
+                        @Html.ActionLink("Chi Tiết", "Details", new { id = item.id }) |
+                        @Html.ActionLink("Xóa", "Delete", new { id = item.id })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

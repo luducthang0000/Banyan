@@ -1,0 +1,19 @@
+﻿@{
+    IEnumerable<string> cates = ViewBag.Category;
+}
+<ul class="category">
+    @{
+        var i = 0;
+        foreach (string cate in cates)
+        {
+            i++;
+            var blur = "style=opacity:0.1";
+            <li @if (@i > 4) { @blur }>
+                <a href="#@cate">
+                    <div class="img"></div>
+                    <p>@cate</p>
+                </a>
+            </li>
+        }
+    }
+</ul>

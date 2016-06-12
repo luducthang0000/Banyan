@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>@ViewBag.Title</title>
+    <link href="~/Styles/admin.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/jquery-1.8.2.min.js"></script>
+    @RenderSection("scripts", required: false)
+</head>
+<body>
+    <ul id="menu">
+        <li>@Html.ActionLink("Trang chủ", "AllFood", "Food")</li>
+        <li>@Html.ActionLink("Danh sách món", "Index", "vFoodAdmin")</li>
+        <li>@Html.ActionLink("Món theo ngày", "Index", "vSpecialAdmin")</li>
+    </ul>
+
+    <div id="body">
+        <div class="table-title">
+            <div class="table-title-content">
+                <h3 style="display:inline-block">@ViewBag.Title</h3>
+                <h4 style="display:inline-block">&nbsp;&nbsp;-&nbsp;&nbsp;@ViewBag.Message</h4>
+            </div>
+        </div>
+        @RenderBody()
+    </div>
+</body>
+</html>

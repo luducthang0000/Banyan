@@ -1,0 +1,210 @@
+﻿@model List<Banyan.Models.FoodSpecialDateList>
+
+@{
+    Layout = "~/Views/Shared/Admin.cshtml";
+}
+
+
+<link href="~/Styles/specialdate.css" rel="stylesheet" />
+<link href="~/Styles/table.css" rel="stylesheet" />
+<div class="content-page-big">
+    <div class="content-page-left">
+        <div class="searchbox">
+            <label class="searchboxitem">Danh mục</label>
+            @Html.DropDownList("categoryid", (SelectList)ViewBag.categoryid, "...", new { onchange = "Search();", @class = "searchboxitem" })
+            <label class="searchboxitem">Lọc món</label>
+            @Html.TextBox("SearchString", "", new { @class = "searchboxitem" })
+            <input class="searchboxitem" type="button" onclick="Search()" value="Tìm kiếm" />
+        </div>
+
+        <table class="table-fill">
+            <thead>
+                <tr>
+                    <th>
+                        Danh mục
+                    </th>
+                    <th>
+                        Tên món
+                    </th>
+                    <th>
+                        Giá
+                    </th>
+                    <th>
+                        Hình nhỏ
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody class="table-hover" id="tableleft">
+                @foreach (var item in Model.ElementAt(0).Foods)
+                {
+                    <tr>
+                        <td class="hiddentd">
+                            @Html.DisplayFor(modelItem => item.id)
+                        </td>
+                        <td class="danhmuctd">
+                            @Html.DisplayFor(modelItem => item.categoryname)
+                        </td>
+                        <td class="tenmontd">
+                            @Html.DisplayFor(modelItem => item.name)
+                        </td>
+                        <td class="smalltd">
+                            @Html.DisplayFor(modelItem => item.price)
+                        </td>
+                        <td class="smalltd">
+                            <img class="verysmallimg" src="../../Images/Food/@item.smallimage" />
+                        </td>
+                        <td class="movetd">
+                            <img src="../../Images/BackgroundAdmin/moveRight.png" />
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="content-page-right">
+        <div class="searchbox">
+            <label class="searchboxitem">Ngày bán</label>
+            <input type="text" class="searchboxitem" id="datebuying" style="width: 295px" />
+            <span id="dateError">abc @ViewBag.DateError</span>
+        </div>
+
+        <table class="table-fill">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>
+                        Danh mục
+                    </th>
+                    <th>
+                        Tên món
+                    </th>
+                    <th>
+                        Giá
+                    </th>
+                    <th>
+                        Hình nhỏ
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="table-hover" id="tableright">
+                @foreach (var item in Model.ElementAt(1).Foods)
+                {
+                    <tr>
+                        <td class="movetd">
+                            <img src="../../Images/BackgroundAdmin/moveLeft.png" />
+                        </td>
+                        <td class="hiddentd">
+                            @Html.DisplayFor(modelItem => item.id)
+                        </td>
+                        <td class="danhmuctd">
+                            @Html.DisplayFor(modelItem => item.categoryname)
+                        </td>
+                        <td class="tenmontd">
+                            @Html.DisplayFor(modelItem => item.name)
+                        </td>
+                        <td class="smalltd">
+                            @Html.DisplayFor(modelItem => item.price)
+                        </td>
+                        <td class="smalltd">
+                            <img class="verysmallimg" src="../../Images/Food/@item.smallimage" />
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryui")
+    @Styles.Render("~/Content/themes/base/css")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#datebuying").datepicker({
+                dateFormat: 'dd/mm/yy',
+                changeMonth: true,
+                changeYear: true,
+                onSelect: function (date) {
+                    $.ajax({
+                        url: '@Url.Action("GetFoodInDate", "vSpecialAdmin")',
+                        type: 'GET',
+                        contentType: 'application/json',
+                        data: { datestr: $('#datebuying').val() },
+                        success: function (data) {
+                            var html = "";
+                            for (var i = 0; i < data.length; i++) {
+                                html += "<tr>";
+                                html += "   <td class='movetd'>";
+                                html += "       <img src='../../Images/BackgroundAdmin/moveLeft.png'/>";
+                                html += "   </td>";
+                                html += "   <td class='danhmuctd'>" + data[i].categoryname + "</td>";
+                                html += "   <td class='hiddentd'>" + data[i].id + "</td>";
+                                html += "   <td class='tenmontd'>" + data[i].name + "</td>";
+                                html += "   <td class='smalltd'>" + data[i].price + "</td>";
+                                html += "   <td class='smalltd'>";
+                                html += "       <img class='verysmallimg' src='../../Images/Food/" + data[i].smallimage + "' />";
+                                html += "   </td>";
+                                html += "</tr>";
+                            }
+                            $('#tableright').html(html);
+                        }
+                    });
+                }
+            }).datepicker("setDate", new Date().getDay + 1);
+        });
+    </script>
+}
+
+<script type="text/javascript">
+    $(window).scroll(function () {
+        if ($(this).scrollTop() > 140) {
+            $('.content-page-right').addClass("sticky");
+        }
+        else {
+            $('.content-page-right').removeClass("sticky");
+        }
+    });
+
+    function Search() {
+        $.ajax({
+            url: '@Url.Action("FoodOption","vSpecialAdmin")',
+            type: 'GET',
+            contentType: 'application/json',
+            data: { categoryid: $('#categoryid').val(), searchString: $('#SearchString').val(), date: $('#datebuying').val() },
+            success: function (data) {
+                var html = "";
+                for (var i = 0; i < data.length; i++) {
+                    html += "<tr>";
+                    html += "   <td class='danhmuctd'>" + data[i].categoryname + "</td>";
+                    html += "   <td class='hiddentd'>" + data[i].id + "</td>";
+                    html += "   <td class='tenmontd'>" + data[i].name + "</td>";
+                    html += "   <td class='smalltd'>" + data[i].price + "</td>";
+                    html += "   <td class='smalltd'>";
+                    html += "       <img class='verysmallimg' src='../../Images/Food/" + data[i].smallimage + "' />";
+                    html += "   </td>";
+                    html += "   <td class='movetd'>";
+                    html += "       <img src='../../Images/BackgroundAdmin/moveRight.png'/>";
+                    html += "   </td>";
+                    html += "</tr>";
+                }
+                $('#tableleft').html(html);
+            }
+        });
+    }
+
+    $('.content-page-left .movetd').bind('click', function () {
+        var id = $(this).parent().find('.hiddentd').html().trim();
+        $(this).parent().slideUp(0);
+        $.ajax({
+            url: '@Url.Action("AddFoodInDate","vSpecialAdmin")',
+            type: 'POST',
+            data: { id: id, dateStr: $('#datebuying').val() },
+            success: function () {
+                $('#dateError').html(ViewBag.DateError);
+            }
+        });
+    });
+
+</script>

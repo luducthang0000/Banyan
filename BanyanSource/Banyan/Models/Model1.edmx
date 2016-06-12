@@ -1,0 +1,824 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="banyandbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="billing">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="customerid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="createdate" Type="datetime" />
+          <Property Name="count" Type="int" />
+          <Property Name="totalprice" Type="decimal" Precision="9" Scale="0" />
+          <Property Name="note" Type="nvarchar" MaxLength="200" />
+          <Property Name="deliverydatetime" Type="datetime" />
+          <Property Name="address" Type="nvarchar" MaxLength="150" />
+          <Property Name="customername" Type="nvarchar" MaxLength="30" />
+          <Property Name="phone" Type="varchar" MaxLength="17" />
+        </EntityType>
+        <EntityType Name="billingdetail">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="billingid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="foodid" Type="uniqueidentifier" />
+          <Property Name="price" Type="decimal" Precision="9" Scale="0" />
+          <Property Name="count" Type="int" />
+          <Property Name="totalprice" Type="decimal" Precision="9" Scale="0" />
+        </EntityType>
+        <EntityType Name="category">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="restaurantid" Type="uniqueidentifier" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="createdate" Type="datetime" />
+          <Property Name="position" Type="int" />
+        </EntityType>
+        <EntityType Name="city">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="customer">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="30" />
+          <Property Name="password" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="fullname" Type="nvarchar" MaxLength="30" />
+          <Property Name="createdate" Type="datetime" />
+          <Property Name="phone" Type="varchar" MaxLength="17" />
+          <Property Name="birthday" Type="datetime" />
+          <Property Name="gender" Type="tinyint" />
+          <Property Name="housenumber" Type="nvarchar" MaxLength="150" />
+          <Property Name="street" Type="nvarchar" MaxLength="150" />
+          <Property Name="wardid" Type="uniqueidentifier" />
+          <Property Name="city" Type="varchar" MaxLength="25" />
+        </EntityType>
+        <EntityType Name="district">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="cityid" Type="uniqueidentifier" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="food">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="categoryid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="150" />
+          <Property Name="price" Type="decimal" Precision="9" Scale="0" Nullable="false" />
+          <Property Name="inventory" Type="int" />
+          <Property Name="sold" Type="int" />
+          <Property Name="bigimage" Type="varchar" MaxLength="300" />
+          <Property Name="smallimage" Type="varchar" MaxLength="300" />
+          <Property Name="allday" Type="bit" Nullable="false" />
+          <Property Name="enable" Type="bit" Nullable="false" />
+          <Property Name="createdate" Type="datetime" />
+          <Property Name="position" Type="int" />
+        </EntityType>
+        <EntityType Name="foodspecialday">
+          <Key>
+            <PropertyRef Name="foodid" />
+            <PropertyRef Name="specialdateid" />
+          </Key>
+          <Property Name="foodid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="specialdateid" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="restaurant">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="website" Type="varchar" MaxLength="100" />
+          <Property Name="email" Type="varchar" MaxLength="30" />
+          <Property Name="phone" Type="varchar" MaxLength="17" />
+          <Property Name="address" Type="nvarchar" MaxLength="150" />
+          <Property Name="registdate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="specialdate">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="date" Type="char" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ward">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="district" Type="uniqueidentifier" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="admin">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="30" />
+          <Property Name="password" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="fullname" Type="nvarchar" MaxLength="30" />
+          <Property Name="createdate" Type="datetime" />
+          <Property Name="phone" Type="varchar" MaxLength="17" />
+          <Property Name="birthday" Type="datetime" />
+          <Property Name="gender" Type="tinyint" />
+          <Property Name="address" Type="nvarchar" MaxLength="150" />
+          <Property Name="identitycard" Type="varchar" MaxLength="15" />
+          <Property Name="role" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="fullname" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <Association Name="FK_billing_customer">
+          <End Role="customer" Type="Self.customer" Multiplicity="1" />
+          <End Role="billing" Type="Self.billing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customer">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="billing">
+              <PropertyRef Name="customerid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_billingdetail_billing">
+          <End Role="billing" Type="Self.billing" Multiplicity="1" />
+          <End Role="billingdetail" Type="Self.billingdetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="billing">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="billingdetail">
+              <PropertyRef Name="billingid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_billingdetail_food">
+          <End Role="food" Type="Self.food" Multiplicity="0..1" />
+          <End Role="billingdetail" Type="Self.billingdetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="food">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="billingdetail">
+              <PropertyRef Name="foodid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_category_restaurant">
+          <End Role="restaurant" Type="Self.restaurant" Multiplicity="0..1" />
+          <End Role="category" Type="Self.category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="restaurant">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="category">
+              <PropertyRef Name="restaurantid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_customer_ward">
+          <End Role="ward" Type="Self.ward" Multiplicity="0..1" />
+          <End Role="customer" Type="Self.customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ward">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="customer">
+              <PropertyRef Name="wardid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_district_city">
+          <End Role="city" Type="Self.city" Multiplicity="0..1" />
+          <End Role="district" Type="Self.district" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="city">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="district">
+              <PropertyRef Name="cityid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_food_category">
+          <End Role="category" Type="Self.category" Multiplicity="1" />
+          <End Role="food" Type="Self.food" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="food">
+              <PropertyRef Name="categoryid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_foodspecialday_food">
+          <End Role="food" Type="Self.food" Multiplicity="1" />
+          <End Role="foodspecialday" Type="Self.foodspecialday" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="food">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="foodspecialday">
+              <PropertyRef Name="foodid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_foodspecialday_specialdate">
+          <End Role="specialdate" Type="Self.specialdate" Multiplicity="1" />
+          <End Role="foodspecialday" Type="Self.foodspecialday" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="specialdate">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="foodspecialday">
+              <PropertyRef Name="specialdateid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ward_district">
+          <End Role="district" Type="Self.district" Multiplicity="0..1" />
+          <End Role="ward" Type="Self.ward" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="district">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ward">
+              <PropertyRef Name="district" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="banyandbModelStoreContainer">
+          <EntitySet Name="billing" EntityType="Self.billing" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="billingdetail" EntityType="Self.billingdetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="category" EntityType="Self.category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="city" EntityType="Self.city" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="customer" EntityType="Self.customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="district" EntityType="Self.district" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="food" EntityType="Self.food" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="foodspecialday" EntityType="Self.foodspecialday" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="restaurant" EntityType="Self.restaurant" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="specialdate" EntityType="Self.specialdate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ward" EntityType="Self.ward" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="admin" EntityType="Self.admin" Schema="tjyrzbzm_luducthang" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="tjyrzbzm_luducthang" store:Type="Tables" />
+          <AssociationSet Name="FK_billing_customer" Association="Self.FK_billing_customer">
+            <End Role="customer" EntitySet="customer" />
+            <End Role="billing" EntitySet="billing" />
+          </AssociationSet>
+          <AssociationSet Name="FK_billingdetail_billing" Association="Self.FK_billingdetail_billing">
+            <End Role="billing" EntitySet="billing" />
+            <End Role="billingdetail" EntitySet="billingdetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_billingdetail_food" Association="Self.FK_billingdetail_food">
+            <End Role="food" EntitySet="food" />
+            <End Role="billingdetail" EntitySet="billingdetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_category_restaurant" Association="Self.FK_category_restaurant">
+            <End Role="restaurant" EntitySet="restaurant" />
+            <End Role="category" EntitySet="category" />
+          </AssociationSet>
+          <AssociationSet Name="FK_customer_ward" Association="Self.FK_customer_ward">
+            <End Role="ward" EntitySet="ward" />
+            <End Role="customer" EntitySet="customer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_district_city" Association="Self.FK_district_city">
+            <End Role="city" EntitySet="city" />
+            <End Role="district" EntitySet="district" />
+          </AssociationSet>
+          <AssociationSet Name="FK_food_category" Association="Self.FK_food_category">
+            <End Role="category" EntitySet="category" />
+            <End Role="food" EntitySet="food" />
+          </AssociationSet>
+          <AssociationSet Name="FK_foodspecialday_food" Association="Self.FK_foodspecialday_food">
+            <End Role="food" EntitySet="food" />
+            <End Role="foodspecialday" EntitySet="foodspecialday" />
+          </AssociationSet>
+          <AssociationSet Name="FK_foodspecialday_specialdate" Association="Self.FK_foodspecialday_specialdate">
+            <End Role="specialdate" EntitySet="specialdate" />
+            <End Role="foodspecialday" EntitySet="foodspecialday" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ward_district" Association="Self.FK_ward_district">
+            <End Role="district" EntitySet="district" />
+            <End Role="ward" EntitySet="ward" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="banyandbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="billing">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="customerid" Type="Guid" Nullable="false" />
+          <Property Name="createdate" Type="DateTime" Precision="3" />
+          <Property Name="count" Type="Int32" />
+          <Property Name="totalprice" Type="Decimal" Precision="9" Scale="0" />
+          <Property Name="note" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="deliverydatetime" Type="DateTime" Precision="3" />
+          <Property Name="address" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="customername" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="phone" Type="String" MaxLength="17" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="customer" Relationship="Self.FK_billing_customer" FromRole="billing" ToRole="customer" />
+          <NavigationProperty Name="billingdetail" Relationship="Self.FK_billingdetail_billing" FromRole="billing" ToRole="billingdetail" />
+        </EntityType>
+        <EntityType Name="billingdetail">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="billingid" Type="Guid" Nullable="false" />
+          <Property Name="foodid" Type="Guid" />
+          <Property Name="price" Type="Decimal" Precision="9" Scale="0" />
+          <Property Name="count" Type="Int32" />
+          <Property Name="totalprice" Type="Decimal" Precision="9" Scale="0" />
+          <NavigationProperty Name="billing" Relationship="Self.FK_billingdetail_billing" FromRole="billingdetail" ToRole="billing" />
+          <NavigationProperty Name="food" Relationship="Self.FK_billingdetail_food" FromRole="billingdetail" ToRole="food" />
+        </EntityType>
+        <EntityType Name="category">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="restaurantid" Type="Guid" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="createdate" Type="DateTime" Precision="3" />
+          <Property Name="position" Type="Int32" />
+          <NavigationProperty Name="restaurant" Relationship="Self.FK_category_restaurant" FromRole="category" ToRole="restaurant" />
+          <NavigationProperty Name="food" Relationship="Self.FK_food_category" FromRole="category" ToRole="food" />
+        </EntityType>
+        <EntityType Name="city">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="district" Relationship="Self.FK_district_city" FromRole="city" ToRole="district" />
+        </EntityType>
+        <EntityType Name="customer">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="fullname" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="createdate" Type="DateTime" Precision="3" />
+          <Property Name="phone" Type="String" MaxLength="17" FixedLength="false" Unicode="false" />
+          <Property Name="birthday" Type="DateTime" Precision="3" />
+          <Property Name="gender" Type="Byte" />
+          <Property Name="housenumber" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="street" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="wardid" Type="Guid" />
+          <Property Name="city" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="billing" Relationship="Self.FK_billing_customer" FromRole="customer" ToRole="billing" />
+          <NavigationProperty Name="ward" Relationship="Self.FK_customer_ward" FromRole="customer" ToRole="ward" />
+        </EntityType>
+        <EntityType Name="district">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="cityid" Type="Guid" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="city" Relationship="Self.FK_district_city" FromRole="district" ToRole="city" />
+          <NavigationProperty Name="ward" Relationship="Self.FK_ward_district" FromRole="district" ToRole="ward" />
+        </EntityType>
+        <EntityType Name="food">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="categoryid" Type="Guid" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="price" Type="Decimal" Precision="9" Scale="0" Nullable="false" />
+          <Property Name="inventory" Type="Int32" />
+          <Property Name="sold" Type="Int32" />
+          <Property Name="bigimage" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="smallimage" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="allday" Type="Boolean" Nullable="false" />
+          <Property Name="enable" Type="Boolean" Nullable="false" />
+          <Property Name="createdate" Type="DateTime" Precision="3" />
+          <Property Name="position" Type="Int32" />
+          <NavigationProperty Name="billingdetail" Relationship="Self.FK_billingdetail_food" FromRole="food" ToRole="billingdetail" />
+          <NavigationProperty Name="category" Relationship="Self.FK_food_category" FromRole="food" ToRole="category" />
+          <NavigationProperty Name="specialdate" Relationship="Self.foodspecialday" FromRole="food" ToRole="specialdate" />
+        </EntityType>
+        <EntityType Name="restaurant">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="website" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="phone" Type="String" MaxLength="17" FixedLength="false" Unicode="false" />
+          <Property Name="address" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="registdate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="category" Relationship="Self.FK_category_restaurant" FromRole="restaurant" ToRole="category" />
+        </EntityType>
+        <EntityType Name="specialdate">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="date" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="food" Relationship="Self.foodspecialday" FromRole="specialdate" ToRole="food" />
+        </EntityType>
+        <EntityType Name="ward">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="district" Type="Guid" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="customer" Relationship="Self.FK_customer_ward" FromRole="ward" ToRole="customer" />
+          <NavigationProperty Name="district1" Relationship="Self.FK_ward_district" FromRole="ward" ToRole="district" />
+        </EntityType>
+        <EntityType Name="admin">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="fullname" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="createdate" Type="DateTime" Precision="3" />
+          <Property Name="phone" Type="String" MaxLength="17" FixedLength="false" Unicode="false" />
+          <Property Name="birthday" Type="DateTime" Precision="3" />
+          <Property Name="gender" Type="Byte" />
+          <Property Name="address" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="identitycard" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="role" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="fullname" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_billing_customer">
+          <End Role="customer" Type="Self.customer" Multiplicity="1" />
+          <End Role="billing" Type="Self.billing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customer">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="billing">
+              <PropertyRef Name="customerid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_billingdetail_billing">
+          <End Role="billing" Type="Self.billing" Multiplicity="1" />
+          <End Role="billingdetail" Type="Self.billingdetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="billing">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="billingdetail">
+              <PropertyRef Name="billingid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_billingdetail_food">
+          <End Role="food" Type="Self.food" Multiplicity="0..1" />
+          <End Role="billingdetail" Type="Self.billingdetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="food">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="billingdetail">
+              <PropertyRef Name="foodid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_category_restaurant">
+          <End Role="restaurant" Type="Self.restaurant" Multiplicity="0..1" />
+          <End Role="category" Type="Self.category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="restaurant">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="category">
+              <PropertyRef Name="restaurantid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_food_category">
+          <End Role="category" Type="Self.category" Multiplicity="1" />
+          <End Role="food" Type="Self.food" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="food">
+              <PropertyRef Name="categoryid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_district_city">
+          <End Role="city" Type="Self.city" Multiplicity="0..1" />
+          <End Role="district" Type="Self.district" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="city">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="district">
+              <PropertyRef Name="cityid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_customer_ward">
+          <End Role="ward" Type="Self.ward" Multiplicity="0..1" />
+          <End Role="customer" Type="Self.customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ward">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="customer">
+              <PropertyRef Name="wardid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ward_district">
+          <End Role="district" Type="Self.district" Multiplicity="0..1" />
+          <End Role="ward" Type="Self.ward" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="district">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ward">
+              <PropertyRef Name="district" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="foodspecialday">
+          <End Role="food" Type="Self.food" Multiplicity="*" />
+          <End Role="specialdate" Type="Self.specialdate" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="banyandbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="billing" EntityType="Self.billing" />
+          <EntitySet Name="billingdetail" EntityType="Self.billingdetail" />
+          <EntitySet Name="category" EntityType="Self.category" />
+          <EntitySet Name="city" EntityType="Self.city" />
+          <EntitySet Name="customer" EntityType="Self.customer" />
+          <EntitySet Name="district" EntityType="Self.district" />
+          <EntitySet Name="food" EntityType="Self.food" />
+          <EntitySet Name="restaurant" EntityType="Self.restaurant" />
+          <EntitySet Name="specialdate" EntityType="Self.specialdate" />
+          <EntitySet Name="ward" EntityType="Self.ward" />
+          <EntitySet Name="admin" EntityType="Self.admin" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <AssociationSet Name="FK_billing_customer" Association="Self.FK_billing_customer">
+            <End Role="customer" EntitySet="customer" />
+            <End Role="billing" EntitySet="billing" />
+          </AssociationSet>
+          <AssociationSet Name="FK_billingdetail_billing" Association="Self.FK_billingdetail_billing">
+            <End Role="billing" EntitySet="billing" />
+            <End Role="billingdetail" EntitySet="billingdetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_billingdetail_food" Association="Self.FK_billingdetail_food">
+            <End Role="food" EntitySet="food" />
+            <End Role="billingdetail" EntitySet="billingdetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_category_restaurant" Association="Self.FK_category_restaurant">
+            <End Role="restaurant" EntitySet="restaurant" />
+            <End Role="category" EntitySet="category" />
+          </AssociationSet>
+          <AssociationSet Name="FK_food_category" Association="Self.FK_food_category">
+            <End Role="category" EntitySet="category" />
+            <End Role="food" EntitySet="food" />
+          </AssociationSet>
+          <AssociationSet Name="FK_district_city" Association="Self.FK_district_city">
+            <End Role="city" EntitySet="city" />
+            <End Role="district" EntitySet="district" />
+          </AssociationSet>
+          <AssociationSet Name="FK_customer_ward" Association="Self.FK_customer_ward">
+            <End Role="ward" EntitySet="ward" />
+            <End Role="customer" EntitySet="customer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ward_district" Association="Self.FK_ward_district">
+            <End Role="district" EntitySet="district" />
+            <End Role="ward" EntitySet="ward" />
+          </AssociationSet>
+          <AssociationSet Name="foodspecialday" Association="Self.foodspecialday">
+            <End Role="food" EntitySet="food" />
+            <End Role="specialdate" EntitySet="specialdate" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="banyandbModelStoreContainer" CdmEntityContainer="banyandbEntities">
+          <EntitySetMapping Name="billing">
+            <EntityTypeMapping TypeName="banyandbModel.billing">
+              <MappingFragment StoreEntitySet="billing">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="customerid" ColumnName="customerid" />
+                <ScalarProperty Name="createdate" ColumnName="createdate" />
+                <ScalarProperty Name="count" ColumnName="count" />
+                <ScalarProperty Name="totalprice" ColumnName="totalprice" />
+                <ScalarProperty Name="note" ColumnName="note" />
+                <ScalarProperty Name="deliverydatetime" ColumnName="deliverydatetime" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="customername" ColumnName="customername" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="billingdetail">
+            <EntityTypeMapping TypeName="banyandbModel.billingdetail">
+              <MappingFragment StoreEntitySet="billingdetail">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="billingid" ColumnName="billingid" />
+                <ScalarProperty Name="foodid" ColumnName="foodid" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="count" ColumnName="count" />
+                <ScalarProperty Name="totalprice" ColumnName="totalprice" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="category">
+            <EntityTypeMapping TypeName="banyandbModel.category">
+              <MappingFragment StoreEntitySet="category">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="restaurantid" ColumnName="restaurantid" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="createdate" ColumnName="createdate" />
+                <ScalarProperty Name="position" ColumnName="position" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="city">
+            <EntityTypeMapping TypeName="banyandbModel.city">
+              <MappingFragment StoreEntitySet="city">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="customer">
+            <EntityTypeMapping TypeName="banyandbModel.customer">
+              <MappingFragment StoreEntitySet="customer">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="fullname" ColumnName="fullname" />
+                <ScalarProperty Name="createdate" ColumnName="createdate" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="birthday" ColumnName="birthday" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="housenumber" ColumnName="housenumber" />
+                <ScalarProperty Name="street" ColumnName="street" />
+                <ScalarProperty Name="wardid" ColumnName="wardid" />
+                <ScalarProperty Name="city" ColumnName="city" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="district">
+            <EntityTypeMapping TypeName="banyandbModel.district">
+              <MappingFragment StoreEntitySet="district">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="cityid" ColumnName="cityid" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="food">
+            <EntityTypeMapping TypeName="banyandbModel.food">
+              <MappingFragment StoreEntitySet="food">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="categoryid" ColumnName="categoryid" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="inventory" ColumnName="inventory" />
+                <ScalarProperty Name="sold" ColumnName="sold" />
+                <ScalarProperty Name="bigimage" ColumnName="bigimage" />
+                <ScalarProperty Name="smallimage" ColumnName="smallimage" />
+                <ScalarProperty Name="allday" ColumnName="allday" />
+                <ScalarProperty Name="enable" ColumnName="enable" />
+                <ScalarProperty Name="createdate" ColumnName="createdate" />
+                <ScalarProperty Name="position" ColumnName="position" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="restaurant">
+            <EntityTypeMapping TypeName="banyandbModel.restaurant">
+              <MappingFragment StoreEntitySet="restaurant">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="website" ColumnName="website" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="registdate" ColumnName="registdate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="specialdate">
+            <EntityTypeMapping TypeName="banyandbModel.specialdate">
+              <MappingFragment StoreEntitySet="specialdate">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="date" ColumnName="date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ward">
+            <EntityTypeMapping TypeName="banyandbModel.ward">
+              <MappingFragment StoreEntitySet="ward">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="district" ColumnName="district" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="admin">
+            <EntityTypeMapping TypeName="banyandbModel.admin">
+              <MappingFragment StoreEntitySet="admin">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="fullname" ColumnName="fullname" />
+                <ScalarProperty Name="createdate" ColumnName="createdate" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="birthday" ColumnName="birthday" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="identitycard" ColumnName="identitycard" />
+                <ScalarProperty Name="role" ColumnName="role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="banyandbModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="fullname" ColumnName="fullname" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="foodspecialday" TypeName="banyandbModel.foodspecialday" StoreEntitySet="foodspecialday">
+            <EndProperty Name="food">
+              <ScalarProperty Name="id" ColumnName="foodid" />
+            </EndProperty>
+            <EndProperty Name="specialdate">
+              <ScalarProperty Name="id" ColumnName="specialdateid" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,87 @@
+﻿.content-page-big {
+    margin: 30px auto 100px auto;
+    position: relative;
+    width: 100%;
+}
+
+.content-page-left {
+    position: relative;
+    display: inline-block;
+    width: 44%;
+    margin-left: 3%;
+}
+
+.content-page-right {
+    float: right;
+    display: inline-block;
+    width: 44%;
+    margin-right: 3%;
+}
+
+
+    .content-page-right.sticky {
+        position: fixed;
+        top: 15px;
+        right: 0px;
+    }
+
+        .content-page-right.sticky .table-fill {
+            max-height: 675px !important;
+        }
+
+
+.content-page-big .searchbox {
+    padding-left: 0px;
+    padding-right: 0px;
+    width: 100%;
+}
+
+.content-page-big .searchboxitem {
+    margin-left: 0px !important;
+    margin-right: 5px;
+}
+
+.content-page-big .searchbox input[type=button] {
+    width: 92px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.content-page-big .table-hover .danhmuctd {
+    width: 115px;
+}
+
+.content-page-big .table-hover .tenmontd {
+    width: 388px;
+}
+
+.content-page-big .content-page-right .table-fill {
+    margin: 0px;
+    margin-top: 3px;
+    width: auto;
+    max-height: 545px;
+    display: inline-block;
+    overflow: auto;
+}
+
+.movetd {
+    padding: 0px !important;
+    background-color: #0054ff;
+    text-align: center !important;
+    cursor: pointer;
+}
+
+    .movetd > img {
+        margin-top: 4px;
+    }
+
+.btnMoveRight, .btnMoveLeft {
+    background-color: red;
+    display: block;
+    width: 30px;
+    height: 100%;
+}
+
+.hiddentd {
+    display: none;
+}

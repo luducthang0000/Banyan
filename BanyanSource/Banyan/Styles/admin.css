@@ -1,0 +1,164 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    cursor: pointer;
+    text-decoration: none;
+}
+
+p {
+    padding: 5px 0px;
+}
+
+body {
+    background-color: #3e94ec;
+    font-family: "Roboto", helvetica, arial, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+
+div.table-title {
+    display: block;
+    margin: auto;
+    padding: 5px;
+    width: 100%;
+    background-color: #00008B;
+    text-align: center;
+    padding: 25px 0;
+}
+
+.table-title h3 {
+    color: #fafafa;
+    font-size: 25px;
+    font-weight: 400;
+    font-style: normal;
+    font-family: "Roboto", helvetica, arial, sans-serif;
+    text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
+    text-transform: uppercase;
+}
+
+.table-title h4 {
+    color: #fafafa;
+    font-size: 20px;
+    font-weight: 400;
+    font-style: normal;
+    font-family: "Roboto", helvetica, arial, sans-serif;
+    text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
+    text-transform: uppercase;
+}
+
+ul#menu {
+    font-size: 1.2em;
+    font-weight: 600;
+    margin: auto;
+    padding-right: 5px;
+    max-width: 1235px;
+    padding: 20px 25px 5px 0;
+    text-align: right;
+    font-family: "Segoe UI",Verdana,Helvetica,sans-serif;
+}
+
+    ul#menu li {
+        display: inline;
+        list-style: outside none none;
+        padding-left: 15px;
+    }
+
+        ul#menu li a {
+            background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+            color: #E8E8E8;
+            text-decoration: none;
+        }
+
+            ul#menu li a:hover {
+                color: #FFFFFF;
+            }
+
+label {
+    display: inline-block;
+    font-size: 1.2em;
+    font-weight: 600;
+    color: #ffffff;
+    font-family: "Segoe UI",Verdana,Helvetica,sans-serif;
+}
+
+h2 {
+    color: #FFFFFF;
+}
+
+label.checkbox {
+    display: inline;
+}
+
+
+fieldset {
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+
+    fieldset legend {
+        display: none;
+    }
+
+    fieldset ol {
+        padding: 0;
+        list-style: none;
+    }
+
+        fieldset ol li {
+            padding-bottom: 5px;
+        }
+
+textarea {
+    font-family: inherit;
+    width: 500px;
+}
+
+    input:focus, textarea:focus {
+        border: 1px solid #7ac0da;
+    }
+
+input[type="checkbox"] {
+    background: transparent;
+    border: inherit;
+    width: auto;
+}
+
+input[type="submit"],
+input[type="button"],
+button {
+    background-color: #d3dce0;
+    border: 1px solid #787878;
+    cursor: pointer;
+    font-size: 1.2em;
+    font-weight: 600;
+    padding: 7px;
+    margin-right: 8px;
+    width: auto;
+}
+
+td input[type="submit"],
+td input[type="button"],
+td button {
+    font-size: 1em;
+    padding: 4px;
+    margin-right: 4px;
+}
+
+/* info and errors */
+
+
+
+footer {
+    width: 100%;
+    height: 125px;
+    background-color: #00008b;
+    text-align: center;
+    padding-top: 20px;
+    margin: auto;
+    margin-top: 50px;
+}

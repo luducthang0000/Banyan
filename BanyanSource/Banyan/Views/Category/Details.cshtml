@@ -1,0 +1,30 @@
+﻿@model Banyan.Models.category
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/Master.cshtml";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>category</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.name)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.name)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.createdate)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.createdate)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

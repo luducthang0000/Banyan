@@ -1,0 +1,98 @@
+﻿@model Banyan.Models.food
+
+@{
+    Layout = "~/Views/Shared/Admin.cshtml";
+}
+
+<link href="~/Styles/editadmin.css" rel="stylesheet" />
+
+<div class="actiontitle">
+    <p>@ViewBag.ActionTitle</p>
+</div>
+
+<div class="content-edit-layout">
+    <div class="content-edit">
+        <fieldset>
+            <legend>food</legend>
+
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.name)
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.name)
+            </div>
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.category.name)
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.category.name)
+            </div>
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.allday)
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.allday)
+            </div>
+
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.price)
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.price)
+            </div>
+
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.enable)
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.enable)
+            </div>
+
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.inventory)
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.inventory)
+            </div>
+
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.sold)
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.sold)
+            </div>
+
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.createdate)
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.createdate)
+            </div>
+
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.bigimage)
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.bigimage)
+            </div>
+
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.smallimage)
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.smallimage)
+            </div>
+
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.position)
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.position)
+            </div>
+        </fieldset>
+        <p>
+            @Html.ActionLink("Chỉnh sửa", "Edit", new { id = Model.id }) |
+            @Html.ActionLink("Trở về", "Index")
+        </p>
+    </div>
+</div>

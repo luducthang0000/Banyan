@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="ac390f6aa04143e4ad29751a2610e487" Name="Diagram1">
+        <EntityTypeShape EntityType="banyandbModel.billing" Width="1.5" PointX="5.25" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="banyandbModel.billingdetail" Width="1.5" PointX="7.5" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="banyandbModel.category" Width="1.5" PointX="3" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="banyandbModel.city" Width="1.5" PointX="1.5" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="banyandbModel.customer" Width="1.5" PointX="3" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="banyandbModel.district" Width="1.5" PointX="1.5" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="banyandbModel.food" Width="1.5" PointX="5.25" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="banyandbModel.restaurant" Width="1.5" PointX="0.75" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="banyandbModel.specialdate" Width="1.5" PointX="7.5" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="banyandbModel.ward" Width="1.5" PointX="0.75" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="banyandbModel.admin" Width="1.5" PointX="7.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="banyandbModel.Users" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="banyandbModel.FK_billing_customer" ManuallyRouted="false" />
+        <AssociationConnector Association="banyandbModel.FK_billingdetail_billing" ManuallyRouted="false" />
+        <AssociationConnector Association="banyandbModel.FK_billingdetail_food" ManuallyRouted="false" />
+        <AssociationConnector Association="banyandbModel.FK_category_restaurant" ManuallyRouted="false" />
+        <AssociationConnector Association="banyandbModel.FK_food_category" ManuallyRouted="false" />
+        <AssociationConnector Association="banyandbModel.FK_district_city" ManuallyRouted="false" />
+        <AssociationConnector Association="banyandbModel.FK_customer_ward" ManuallyRouted="false" />
+        <AssociationConnector Association="banyandbModel.FK_ward_district" ManuallyRouted="false" />
+        <AssociationConnector Association="banyandbModel.foodspecialday" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,136 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link href="~/Styles/home.css" rel="stylesheet" type="text/css" />
+    <title>BANYAN - @ViewBag.Title</title>
+    <script src="~/Scripts/jquery-1.8.2.min.js"></script>
+    @RenderSection("Scripts", false)
+</head>
+
+<body>
+    <div class="toplayout">
+        <div class="loginbar">
+            <ul class="loginbarcontent">
+                @*<li class="premium">
+                        <a href="#">
+                            <img src="~/Images/background/premium.png" />
+                            <p>Hội viên Premium</p>
+                        </a>
+                    </li>*@
+                <li class="veginhouse">
+                    <img src="~/Images/background/motoshipwhite.png" />
+                    <p>Món chay tại nhà</p>
+                </li>
+                <li class="phone">
+                    <img src="~/Images/background/hotline.png" />
+                    <p>Hotline: 0924014490</p>
+                </li>
+                @*<li class="login">
+                        <img src="~/Images/background/login.png" />
+                        <a class="logintitle" href="#"><p>Đăng ký</p></a>
+                        <p>|</p>
+                        <a class="logintitle" href="#"><p>Đăng nhập</p></a>
+                    </li>*@
+            </ul>
+        </div>
+        <div class="topbar">
+            <ul class="topbarcontent">
+                <li class="banyan">
+                    <img src="~/Images/background/logobanyangreen.png" />
+                    <p>DANH MỤC</p>
+                    @Html.Partial("Category")
+                </li>
+                <li class="shipping">
+                    <img src="~/Images/background/motomini.png" />
+                    <p>CHAY TẠI NHÀ</p>
+                </li>
+                <li class="place">
+                    <img class="iconplace" src="~/Images/background/placemini.png" />
+                    @*<p class="placeaddress">1024 Nam Kỳ Khởi Nghĩa, P.13, Q.Tân Phú</p>*@
+                    <p class="placeaddress">TP.HCM Quận 1, 3, 10</p>
+                    <div class="placechangediv">
+                        <p class="placechange">Đổi địa điểm giao hàng</p>
+                    </div>
+                </li>
+                <li class="shoppingCart">
+                    <img src="~/Images/background/shopping-card-mini.png" />
+                    <p>Giỏ hàng (0)</p>
+                </li>
+            </ul>
+        </div>
+        <div class="topbanner">
+            @Html.Partial("Category")
+            <div class="maintopbanner">
+                <a><img class="topbannerleftimg" src="~/Images/background/banner.jpg" /></a>
+            </div>
+            <div class="subtopbanner">
+                <a><img class="topbannerrightimg" src="~/Images/background/banner2.png" /></a>
+                <a><img class="topbannerrightimg" src="~/Images/background/banner3.jpg" /></a>
+                <a><img class="topbannerrightimg" src="~/Images/background/banner4.jpg" /></a>
+            </div>
+        </div>
+    </div>
+    <div class="midlayout">
+        @RenderBody()
+    </div>
+    <div class="footerlayout">
+        <div class="footercontent">
+            <a href="#" target="_blank"><p>BANYAN - Món chay tại nhà</p></a><br />
+            <a href="#"><p>Hotline: 0924 014 490</p></a><br />
+            <a href="#"><p>Địa chỉ: 90 Bàn cờ, Phường 3, Quận 3, Tp.HCM</p></a>
+        </div>
+    </div>
+
+    @*@Scripts.Render("~/bundles/jquery")
+    @RenderSection("Scripts", false)*@
+
+    <script type="text/javascript">
+        //$(".place").hover(function () {
+        //    $('.placechangediv').css('display', 'block');
+        //    $('.placeaddress').css('opacity', '0.2');
+        //}, function () {
+        //    $('.placechangediv').css('display', 'none');
+        //    $('.placeaddress').css('opacity', '1');
+        //});
+
+        $(".category li").hover(function () {
+            $(this).find('p').css('color', '#FFFFFF');
+        }, function () {
+            $(this).find('p').css('color', '#007c00');
+        });
+
+        $(".banyan").hover(function () {
+            $('.banyan .category').css('display', 'block');
+        }, function () {
+            $('.banyan .category').css('display', 'none');
+        });
+
+        $('.boughtDiv').bind('click', function () {
+            alert('Vui lòng gọi số 0924014490 để đặt món\nCảm ơn quý khách đã ủng hộ Banyan');
+        });
+
+        $(window).scroll(function () {
+            if ($(this).scrollTop() > 1) {
+                $('.topbar').addClass("sticky");
+            }
+            else {
+                $('.topbar').removeClass("sticky");
+            }
+
+            if (document.getElementById("bill") !== null) {
+                if ($(this).scrollTop() > 450) {
+                    $('#bill').addClass("sticky");
+                    $('.productlayout').addClass("sticky");
+                }
+                else {
+                    $('#bill').removeClass("sticky");
+                    $('.productlayout').removeClass("sticky");
+                }
+            }
+        });
+        
+    </script>
+</body>
+</html>

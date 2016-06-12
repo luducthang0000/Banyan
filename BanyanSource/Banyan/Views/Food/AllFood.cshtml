@@ -1,0 +1,45 @@
+﻿@model  List<Banyan.Models.ListFood>
+@{
+    ViewBag.Title = "Món chay tại nhà";
+    Layout = "~/Views/Shared/Master.cshtml";
+}
+
+<div class="productlayout">
+
+    @foreach (var listFood in Model)
+    {
+        var cate = @Html.DisplayFor(x => listFood.Category);
+        <div class="titlefunction" id="@listFood.Category">
+            <ul>
+                <li class="titlefunctionselected"><a><p><b>@listFood.Heading</b></p></a></li>
+                @*<li><a><p><b>LỊCH CƠM CHAY & CÁC MÓN ĐẶC BIỆT</b></p></a></li>*@
+            </ul>
+        </div>
+        <div class="listProductItem">
+            @foreach (var item in listFood.Foods)
+            {
+                <div class="productItem">
+                    <a href='##'>
+                        <div class="productDetail productImg"></div>
+                    </a>
+                    <img class="productImg" src="../Images/Food/@Html.DisplayFor(x => item.smallimage)" />
+                    <div class="productInfor">
+                        <div class="productName"><a href='##'><p>@Html.DisplayFor(x => item.name)</p></a></div>
+                        <p class="productPrice">@Html.DisplayFor(x => item.priceVND)</p>
+                        <p class="productPrice productPriceVND">đ</p>
+                        @*<img class="boughtImage" src="../../Images/Food/boughtnumber.png">";
+                            <p class="boughtNumber">53</p>";*@
+                        <div class="boughtDiv">
+                            <div class="numberbought">
+                                <div class="boughtButtonEdit boughtButtonLeft"><p>-</p></div>
+                                <div class="boughtButtonCenter"><p>0</p></div>
+                                <div class="boughtButtonEdit boughtButtonRight"><p>+</p></div>
+                            </div>
+                            <div class="boughtButton"><p>ĐẶT MÓN</p></div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

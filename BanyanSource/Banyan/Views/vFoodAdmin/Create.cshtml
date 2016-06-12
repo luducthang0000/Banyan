@@ -1,0 +1,120 @@
+﻿@model Banyan.Models.food
+
+@{
+    Layout = "~/Views/Shared/Admin.cshtml";
+}
+
+<link href="~/Styles/editadmin.css" rel="stylesheet" />
+
+<div class="actiontitle">
+    <p>@ViewBag.ActionTitle</p>
+</div>
+
+<div class="content-edit-layout">
+    <div class="content-edit">
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+
+            <fieldset>
+                <legend>food</legend>
+                <div class="editor-label">
+                    <label>Danh mục</label>
+                </div>
+                <div class="editor-field">
+                    @Html.DropDownList("categoryid", String.Empty)
+                    @Html.ValidationMessageFor(model => model.categoryid)
+                </div>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.name)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.name)
+                    @Html.ValidationMessageFor(model => model.name)
+                </div>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.price)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.price)
+                    @Html.ValidationMessageFor(model => model.price)
+                </div>
+
+                @*<div class="editor-label">
+                    @Html.LabelFor(model => model.inventory)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.inventory)
+                    @Html.ValidationMessageFor(model => model.inventory)
+                </div>
+
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.sold)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.sold)
+                    @Html.ValidationMessageFor(model => model.sold)
+                </div>
+
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.createdate)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.createdate)
+                    @Html.ValidationMessageFor(model => model.createdate)
+                </div>*@
+
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.bigimage)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.bigimage)
+                    @Html.ValidationMessageFor(model => model.bigimage)
+                </div>
+
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.smallimage)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.smallimage)
+                    @Html.ValidationMessageFor(model => model.smallimage)
+                </div>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.position)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.position)
+                    @Html.ValidationMessageFor(model => model.position)
+                </div>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.allday)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.allday)
+                    @Html.ValidationMessageFor(model => model.allday)
+                </div>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.enable)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.enable)
+                    @Html.ValidationMessageFor(model => model.enable)
+                </div>
+                
+
+                <p>
+                    <input type="submit" value="Tạo mới" />
+                </p>
+            </fieldset>
+        }
+
+        <div>
+            @Html.ActionLink("Trở về", "Index")
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
