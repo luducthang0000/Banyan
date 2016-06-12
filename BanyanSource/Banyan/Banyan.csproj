@@ -254,6 +254,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Library\Antlr3.Runtime.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Library\DotNetOpenAuth.AspNet.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
