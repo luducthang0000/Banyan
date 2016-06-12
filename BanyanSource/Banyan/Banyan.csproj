@@ -296,18 +296,24 @@
     <Content Include="Library\Newtonsoft.Json.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Library\System.Net.Http.Formatting.dll" />
+    <Content Include="Library\System.Net.Http.Formatting.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Library\System.Spatial.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Library\System.Web.Helpers.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Library\System.Web.Http.dll" />
+    <Content Include="Library\System.Web.Http.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Library\System.Web.Http.OData.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Library\System.Web.Http.WebHost.dll" />
+    <Content Include="Library\System.Web.Http.WebHost.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Library\System.Web.Mvc.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
