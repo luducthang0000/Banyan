@@ -8,14 +8,14 @@
     position: relative;
     display: inline-block;
     width: 44%;
-    margin-left: 3%;
+    margin-left: 4%;
 }
 
 .content-page-right {
     float: right;
     display: inline-block;
     width: 44%;
-    margin-right: 3%;
+    margin-right: 4%;
 }
 
 
@@ -84,4 +84,9 @@
 
 .hiddentd {
     display: none;
+}
+
+#dateError{
+    color:#D20000;
+    font-weight:600;
 }

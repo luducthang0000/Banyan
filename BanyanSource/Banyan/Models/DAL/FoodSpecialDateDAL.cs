@@ -12,7 +12,7 @@ namespace Banyan.Models
         banyandbEntities db = new banyandbEntities();
         public IEnumerable<FoodLite> FoodOptionSearch(Guid? categoryid = null, string searchString = "")
         {
-            IEnumerable<food> foods = db.food.Where(x => x.enable == true);
+            IEnumerable<food> foods = db.food.Where(x => x.enable == true && x.allday == false);
             if (categoryid != null)
                 foods = foods.Where(x => x.category.id == categoryid);
             if (!string.IsNullOrEmpty(searchString))
@@ -37,15 +37,15 @@ namespace Banyan.Models
             {
                 date = DateTime.Now.AddDays(1).ToShortDateString();
             }
-            foods = foods.Except(FoodInDate(date));
+            IEnumerable<FoodLite> foodInDate = FoodInDate(date);
+            foods = foods.Where(x => !foodInDate.Select(y => y.id).Contains(x.id));
             return foods;
         }
         public List<Banyan.Models.FoodSpecialDateList> FoodSpecialDate(Guid? categoryid = null, string searchString = "", string date = "")
         {
             List<Banyan.Models.FoodSpecialDateList> foodSpecialDateList = new List<Banyan.Models.FoodSpecialDateList>();
             List<FoodLite> foodInDate = FoodInDate(date).ToList();
-            List<FoodLite> foodlitesResult = FoodOptionSearch(categoryid, searchString).Except(foodInDate).ToList();
-
+            List<FoodLite> foodlitesResult = FoodOptionSearch(categoryid, searchString).Where(x => !foodInDate.Select(y => y.id).Contains(x.id)).ToList();
             foodSpecialDateList.Add(new Banyan.Models.FoodSpecialDateList(foodlitesResult));
             foodSpecialDateList.Add(new Banyan.Models.FoodSpecialDateList(foodInDate));
 
@@ -58,7 +58,7 @@ namespace Banyan.Models
             {
                 date = DateTime.Now.AddDays(1).ToShortDateString();
             }
-            IEnumerable<FoodLite> foods = db.specialdate.Where(x => x.date == date).SelectMany(x => x.food).Where(x => x.enable == true).OrderBy(x => x.category.name).ThenBy(x => x.position).ThenBy(x => x.name).Select(x => new FoodLite
+            IEnumerable<FoodLite> foods = db.specialdate.Where(x => x.date == date).SelectMany(x => x.food).Where(x => x.enable == true && x.allday == false).OrderBy(x => x.category.name).ThenBy(x => x.position).ThenBy(x => x.name).Select(x => new FoodLite
             {
                 id = x.id,
                 name = x.name,
@@ -88,7 +88,7 @@ namespace Banyan.Models
             db.SaveChanges();
             return sd;
         }
-        internal specialdate GetSpecialDate(string date) 
+        internal specialdate GetSpecialDate(string date)
         {
             return db.specialdate.FirstOrDefault(x => x.date == date);
         }
@@ -96,6 +96,13 @@ namespace Banyan.Models
         {
             food food = db.food.Find(foodid);
             food.specialdate.Add(sd);
+            db.SaveChanges();
+        }
+
+        internal void RemoveFoodSpecialDate(Guid? foodid, specialdate sd)
+        {
+            food food = db.food.Find(foodid);
+            food.specialdate.Remove(sd);
             db.SaveChanges();
         }
     }

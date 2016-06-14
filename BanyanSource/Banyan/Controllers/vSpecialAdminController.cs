@@ -38,145 +38,14 @@ namespace Banyan.Controllers
             string temp = text.Normalize(NormalizationForm.FormD);
             return regex.Replace(temp, String.Empty).Replace('\u0111', 'd').Replace('\u0110', 'D');
         }
-        //
-        // GET: /vFoodAdmin/Details/5
 
-        public ActionResult Details(Guid? id = null)
+        public ActionResult FoodOption(Guid? categoryid = null, string searchString = "", string date = "")
         {
-            food food = db.food.Find(id);
-            if (food == null)
-            {
-                return HttpNotFound();
-            }
-
-            ViewBag.Message = Message;
-            ViewBag.Title = Title;
-            ViewBag.ActionTitle = "Thông tin chi tiết món";
-            return View(food);
-        }
-
-        //
-        // GET: /vFoodAdmin/Create
-
-        public ActionResult Create()
-        {
-            ViewBag.Message = Message;
-            ViewBag.Title = Title;
-            ViewBag.ActionTitle = "Tạo món mới";
-            ViewBag.categoryid = new SelectList(db.category.OrderBy(x => x.position).Select(x => new { x.id, x.name }), "id", "name");
-            return View();
-        }
-
-        //
-        // POST: /vFoodAdmin/Create
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(food food)
-        {
-            if (ModelState.IsValid)
-            {
-                food.id = Guid.NewGuid();
-                food.sold = 1;
-                food.inventory = 1000;
-                food.createdate = DateTime.Now;
-                food.position = food.position != null ? food.position : foodDAL.MaxPosition;
-                db.food.Add(food);
-                db.SaveChanges();
-                foodDAL.UpdatePosition(food);
-                return RedirectToAction("Index");
-            }
-
-            ViewBag.Message = Message;
-            ViewBag.Title = Title;
-            ViewBag.categoryid = new SelectList(db.category.OrderBy(x => x.position).Select(x => new { x.id, x.name }), "id", "name", food.categoryid);
-            return View(food);
-        }
-
-        //
-        // GET: /vFoodAdmin/Edit/5
-
-        public ActionResult Edit(Guid? id = null)
-        {
-            food food = db.food.Find(id);
-            if (food == null)
-            {
-                return HttpNotFound();
-            }
-
-            ViewBag.Message = Message;
-            ViewBag.Title = Title;
-            ViewBag.ActionTitle = "Chỉnh sửa món";
-            ViewBag.categoryid = new SelectList(db.category.OrderBy(x => x.position).Select(x => new { x.id, x.name }), "id", "name", food.categoryid);
-            return View(food);
-        }
-
-        //
-        // POST: /vFoodAdmin/Edit/5
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(food food)
-        {
-            if (ModelState.IsValid)
-            {
-                food.position = food.position != null ? food.position : foodDAL.MaxPosition;
-
-                db.Entry(food).State = EntityState.Modified;
-                db.SaveChanges();
-                foodDAL.UpdatePosition(food);
-                return RedirectToAction("Index");
-            }
-
-            ViewBag.Message = Message;
-            ViewBag.Title = Title;
-            ViewBag.categoryid = new SelectList(db.category.OrderBy(x => x.position).Select(x => new { x.id, x.name }), "id", "name", food.categoryid);
-            return View(food);
-        }
-
-        //
-        // GET: /vFoodAdmin/Delete/5
-
-        public ActionResult Delete(Guid? id = null)
-        {
-            food food = db.food.Find(id);
-            if (food == null)
-            {
-                return HttpNotFound();
-            }
-
-            ViewBag.Message = Message;
-            ViewBag.Title = Title;
-            ViewBag.ActionTitle = "Xóa món";
-            return View(food);
-        }
-
-        //
-        // POST: /vFoodAdmin/Delete/5
-
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(Guid id)
-        {
-            food food = db.food.Find(id);
-            db.food.Remove(food);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        public ActionResult FoodOption(Guid? categoryid = null, string searchString = "")
-        {
-            IEnumerable<FoodLite> foods = foodSpecialDateDAL.FoodOptionSearch(categoryid, searchString);
+            IEnumerable<FoodLite> foods = foodSpecialDateDAL.FoodOptionSearchRemoveFoodInDate(categoryid, searchString, date);
             return Json(foods, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult FoodInDateOption(Guid? categoryid = null, string searchString = "")
-        {
-            IEnumerable<FoodLite> foods = foodSpecialDateDAL.FoodOptionSearch(categoryid, searchString);
-            return Json(foods, JsonRequestBehavior.AllowGet);
-        }
-
-        public ActionResult GetFoodInDate(string datestr = "")
+        public ActionResult GetFoodInDate(string datestr = "", Guid? categoryid = null, string searchString = "")
         {
 
             if (!string.IsNullOrEmpty(datestr))
@@ -188,16 +57,15 @@ namespace Banyan.Controllers
                 }
                 catch
                 {
-                    return View();
+                    return Json(new { Success = false, Message = "Ngày bán không đúng định dạng" }, JsonRequestBehavior.AllowGet);
                 }
                 IEnumerable<FoodLite> foods = foodSpecialDateDAL.FoodInDate(datestr);
-                return Json(foods, JsonRequestBehavior.AllowGet);
+                return Json(new { foodInDate = foods, foodOption = "" }, JsonRequestBehavior.AllowGet);
             }
             return View();
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken()]
         public ActionResult AddFoodInDate(Guid? id, string dateStr)
         {
             if (!string.IsNullOrEmpty(dateStr))
@@ -209,7 +77,7 @@ namespace Banyan.Controllers
                 }
                 catch
                 {
-                    return View();
+                    return Json(new { Success = false, Message = "Ngày bán không đúng định dạng" });
                 }
 
                 specialdate sd = foodSpecialDateDAL.GetSpecialDate(dateStr);
@@ -221,7 +89,7 @@ namespace Banyan.Controllers
                     }
                     else
                     {
-                        ViewBag.DateError = "Không thể quản lý món trong ngày của quá khứ";
+                        return Json(new { Success = false, Message = "Không thể quản lý món trong ngày của quá khứ" });
                     }
                 }
                 else
@@ -233,11 +101,42 @@ namespace Banyan.Controllers
                     }
                     else
                     {
-                        ViewBag.DateError = "Không thể quản lý món trong ngày của quá khứ";
+                        return Json(new { Success = false, Message = "Không thể quản lý món trong ngày của quá khứ" });
                     }
                 }
             }
-            return View();
+            return Json(new { Success = true, Message = "" });
+        }
+
+        [HttpPost]
+        public ActionResult RemoveFoodInDate(Guid? id, string dateStr)
+        {
+            if (!string.IsNullOrEmpty(dateStr))
+            {
+                DateTime date;
+                try
+                {
+                    date = Convert.ToDateTime(dateStr);
+                }
+                catch
+                {
+                    return Json(new { Success = false, Message = "Ngày bán không đúng định dạng" });
+                }
+
+                specialdate sd = foodSpecialDateDAL.GetSpecialDate(dateStr);
+                if (sd != null)
+                {
+                    if (date.Date >= DateTime.Now.Date)
+                    {
+                        foodSpecialDateDAL.RemoveFoodSpecialDate(id, sd);
+                    }
+                    else
+                    {
+                        return Json(new { Success = false, Message = "Không thể quản lý món trong ngày của quá khứ" });
+                    }
+                }
+            }
+            return Json(new { Success = true, Message = "" });
         }
 
         protected override void Dispose(bool disposing)

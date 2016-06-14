@@ -14,7 +14,7 @@
             @Html.DropDownList("categoryid", (SelectList)ViewBag.categoryid, "...", new { onchange = "Search();", @class = "searchboxitem" })
             <label class="searchboxitem">Lọc món</label>
             @Html.TextBox("SearchString", "", new { @class = "searchboxitem" })
-            <input class="searchboxitem" type="button" onclick="Search()" value="Tìm kiếm" />
+            <input class="searchboxitem" type="button" id="btnSearch" onclick="Search()" value="Tìm kiếm" />
         </div>
 
         <table class="table-fill">
@@ -40,16 +40,16 @@
                 {
                     <tr>
                         <td class="hiddentd">
-                            @Html.DisplayFor(modelItem => item.id)
+                            @item.id
                         </td>
                         <td class="danhmuctd">
-                            @Html.DisplayFor(modelItem => item.categoryname)
+                            @item.categoryname
                         </td>
                         <td class="tenmontd">
-                            @Html.DisplayFor(modelItem => item.name)
+                            @item.name
                         </td>
                         <td class="smalltd">
-                            @Html.DisplayFor(modelItem => item.price)
+                            @item.price
                         </td>
                         <td class="smalltd">
                             <img class="verysmallimg" src="../../Images/Food/@item.smallimage" />
@@ -66,7 +66,7 @@
         <div class="searchbox">
             <label class="searchboxitem">Ngày bán</label>
             <input type="text" class="searchboxitem" id="datebuying" style="width: 295px" />
-            <span id="dateError">abc @ViewBag.DateError</span>
+            <span id="dateError">@ViewBag.DateError</span>
         </div>
 
         <table class="table-fill">
@@ -95,16 +95,16 @@
                             <img src="../../Images/BackgroundAdmin/moveLeft.png" />
                         </td>
                         <td class="hiddentd">
-                            @Html.DisplayFor(modelItem => item.id)
+                            @item.id
                         </td>
                         <td class="danhmuctd">
-                            @Html.DisplayFor(modelItem => item.categoryname)
+                            @item.categoryname
                         </td>
                         <td class="tenmontd">
-                            @Html.DisplayFor(modelItem => item.name)
+                            @item.name
                         </td>
                         <td class="smalltd">
-                            @Html.DisplayFor(modelItem => item.price)
+                            @item.price
                         </td>
                         <td class="smalltd">
                             <img class="verysmallimg" src="../../Images/Food/@item.smallimage" />
@@ -127,28 +127,36 @@
                 changeMonth: true,
                 changeYear: true,
                 onSelect: function (date) {
+                    $('#dateError').text('');
                     $.ajax({
                         url: '@Url.Action("GetFoodInDate", "vSpecialAdmin")',
                         type: 'GET',
                         contentType: 'application/json',
-                        data: { datestr: $('#datebuying').val() },
+                        data: { datestr: $('#datebuying').val(), categoryid: $('#categoryid').val(), searchString: $('#SearchString').val() },
+                        async: false,
                         success: function (data) {
-                            var html = "";
-                            for (var i = 0; i < data.length; i++) {
-                                html += "<tr>";
-                                html += "   <td class='movetd'>";
-                                html += "       <img src='../../Images/BackgroundAdmin/moveLeft.png'/>";
-                                html += "   </td>";
-                                html += "   <td class='danhmuctd'>" + data[i].categoryname + "</td>";
-                                html += "   <td class='hiddentd'>" + data[i].id + "</td>";
-                                html += "   <td class='tenmontd'>" + data[i].name + "</td>";
-                                html += "   <td class='smalltd'>" + data[i].price + "</td>";
-                                html += "   <td class='smalltd'>";
-                                html += "       <img class='verysmallimg' src='../../Images/Food/" + data[i].smallimage + "' />";
-                                html += "   </td>";
-                                html += "</tr>";
+                            if (typeof data.foodInDate === "undefined") {
+                                $('#dateError').text(data.Message);
                             }
-                            $('#tableright').html(html);
+                            else {
+                                var html = "";
+                                var foodInDate = data.foodInDate;
+                                for (var i = 0; i < foodInDate.length; i++) {
+                                    html += "<tr>";
+                                    html += "   <td class='movetd'>";
+                                    html += "       <img src='../../Images/BackgroundAdmin/moveLeft.png'/>";
+                                    html += "   </td>";
+                                    html += "   <td class='hiddentd'>" + foodInDate[i].id + "</td>";
+                                    html += "   <td class='danhmuctd'>" + foodInDate[i].categoryname + "</td>";
+                                    html += "   <td class='tenmontd'>" + foodInDate[i].name + "</td>";
+                                    html += "   <td class='smalltd'>" + foodInDate[i].price + "</td>";
+                                    html += "   <td class='smalltd'>";
+                                    html += "       <img class='verysmallimg' src='../../Images/Food/" + foodInDate[i].smallimage + "' />";
+                                    html += "   </td>";
+                                    html += "</tr>";
+                                }
+                                $('#tableright').html(html);
+                            }
                         }
                     });
                 }
@@ -168,43 +176,125 @@
     });
 
     function Search() {
+        DisableItem($('#btnSearch'));
         $.ajax({
             url: '@Url.Action("FoodOption","vSpecialAdmin")',
             type: 'GET',
             contentType: 'application/json',
             data: { categoryid: $('#categoryid').val(), searchString: $('#SearchString').val(), date: $('#datebuying').val() },
+            async: false,
             success: function (data) {
                 var html = "";
                 for (var i = 0; i < data.length; i++) {
-                    html += "<tr>";
-                    html += "   <td class='danhmuctd'>" + data[i].categoryname + "</td>";
-                    html += "   <td class='hiddentd'>" + data[i].id + "</td>";
-                    html += "   <td class='tenmontd'>" + data[i].name + "</td>";
-                    html += "   <td class='smalltd'>" + data[i].price + "</td>";
-                    html += "   <td class='smalltd'>";
-                    html += "       <img class='verysmallimg' src='../../Images/Food/" + data[i].smallimage + "' />";
-                    html += "   </td>";
-                    html += "   <td class='movetd'>";
-                    html += "       <img src='../../Images/BackgroundAdmin/moveRight.png'/>";
-                    html += "   </td>";
-                    html += "</tr>";
+                    html += CreateLeftRow(data[i].id, data[i].categoryname, data[i].name, data[i].price, "../../Images/Food/" + data[i].smallimage);
                 }
                 $('#tableleft').html(html);
             }
         });
+        EnableItem($('#btnSearch'));
     }
 
-    $('.content-page-left .movetd').bind('click', function () {
-        var id = $(this).parent().find('.hiddentd').html().trim();
-        $(this).parent().slideUp(0);
+    function EnableItem(item) {
+        item.prop('disabled', false);
+        item.css('opacity', '1');
+    }
+
+    function DisableItem(item) {
+        item.prop('disabled', true);
+        item.css('opacity', '0.7');
+    }
+
+    function CreateLeftRow(id, categoryname, name, price, imgsrc) {
+        html = "";
+        html += "<tr>";
+        html += "   <td class='hiddentd'>" + id + "</td>";
+        html += "   <td class='danhmuctd'>" + categoryname + "</td>";
+        html += "   <td class='tenmontd'>" + name + "</td>";
+        html += "   <td class='smalltd'>" + price + "</td>";
+        html += "   <td class='smalltd'>";
+        html += "       <img class='verysmallimg' src='" + imgsrc + "' />";
+        html += "   </td>";
+        html += "   <td class='movetd'>";
+        html += "       <img src='../../Images/BackgroundAdmin/moveRight.png'/>";
+        html += "   </td>";
+        html += "</tr>";
+        return html;
+    }
+
+    function CreateRightRow(id, categoryname, name, price, imgsrc) {
+        html = "";
+        html += "<tr>";
+        html += "   <td class='movetd'>";
+        html += "       <img src='../../Images/BackgroundAdmin/moveLeft.png'/>";
+        html += "   </td>";
+        html += "   <td class='hiddentd'>" + id + "</td>";
+        html += "   <td class='danhmuctd'>" + categoryname + "</td>";
+        html += "   <td class='tenmontd'>" + name + "</td>";
+        html += "   <td class='smalltd'>" + price + "</td>";
+        html += "   <td class='smalltd'>";
+        html += "       <img class='verysmallimg' src='" + imgsrc + "' />";
+        html += "   </td>";
+        html += "</tr>";
+        return html;
+    }
+
+    $('.content-page-left .movetd').live('click', function () {
+        $('#dateError').text('');
+        var tr = $(this).parent();
+        var id = tr.find('.hiddentd').text().trim();
+        var listtd = tr.find('td');
+        tr.css('opacity', '0.2');
+
         $.ajax({
             url: '@Url.Action("AddFoodInDate","vSpecialAdmin")',
             type: 'POST',
             data: { id: id, dateStr: $('#datebuying').val() },
-            success: function () {
-                $('#dateError').html(ViewBag.DateError);
+            async: false,
+            success: function (data) {
+                if (data.Success == true) {
+                    tr.hide(0);
+                    var id = listtd.eq(0).text().trim();
+                    var danhmuc = listtd.eq(1).text().trim();
+                    var name = listtd.eq(2).text().trim();
+                    var price = listtd.eq(3).text().trim();
+                    var imgsrc = listtd.eq(4).find('img').eq(0).attr('src');
+                    $('#tableright').append(CreateRightRow(id, danhmuc, name, price, imgsrc));
+                }
+                else {
+                    $('#dateError').text(data.Message);
+                }
+                tr.css('opacity', '1');
             }
         });
     });
 
+    $('.content-page-right .movetd').live('click', function () {
+        $('#dateError').text('');
+        var tr = $(this).parent();
+        var id = tr.find('.hiddentd').text().trim();
+        var listtd = tr.find('td');
+        tr.css('opacity', '0.2');
+
+        $.ajax({
+            url: '@Url.Action("RemoveFoodInDate", "vSpecialAdmin")',
+            type: 'POST',
+            data: { id: id, dateStr: $('#datebuying').val() },
+            async: false,
+            success: function (data) {
+                if (data.Success == true) {
+                    tr.hide(0);
+                    var id = listtd.eq(1).text().trim();
+                    var danhmuc = listtd.eq(2).text().trim();
+                    var name = listtd.eq(3).text().trim();
+                    var price = listtd.eq(4).text().trim();
+                    var imgsrc = listtd.eq(5).find('img').eq(0).attr('src');
+                    $('#tableleft').append(CreateLeftRow(id, danhmuc, name, price, imgsrc));
+                }
+                else {
+                    $('#dateError').text(data.Message);
+                }
+                tr.css('opacity', '1');
+            }
+        });
+    });
 </script>
